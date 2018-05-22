@@ -36,7 +36,7 @@ public class playertel {
 	}
 	
 	// 接收当前玩家、牌、颜色信息
-	public boolean rcvnow(int pl, int num, int cl)
+	public boolean rcvnow(int pl, int num, int cl, int dierc)
 	{
 		return true;
 	}

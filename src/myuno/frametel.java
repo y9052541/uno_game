@@ -49,7 +49,7 @@ public class frametel extends playertel {
 	            		rcvcard (Integer.parseInt(rcv[1]), Integer.parseInt(rcv[2]));
 	            		break;
 	            	case "n":
-	            		rcvnow (Integer.parseInt(rcv[1]), Integer.parseInt(rcv[2]), Integer.parseInt(rcv[3]));
+	            		rcvnow (Integer.parseInt(rcv[1]), Integer.parseInt(rcv[2]), Integer.parseInt(rcv[3]), Integer.parseInt(rcv[4]));
 	            		break;
 	            	case "r":
 	            		rcvresult (Integer.parseInt(rcv[1]), Integer.parseInt(rcv[2]));
@@ -146,9 +146,9 @@ public class frametel extends playertel {
 	}
 	
 	// 接收当前玩家、牌、颜色信息
-	public boolean rcvnow(int pl, int num, int cl)
+	public boolean rcvnow(int pl, int num, int cl, int direc)
 	{
-		u.rcvnow(pl, num, cl);
+		u.rcvnow(pl, num, cl, direc);
 		return true;
 	}
 	

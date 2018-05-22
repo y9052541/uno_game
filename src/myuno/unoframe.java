@@ -81,6 +81,7 @@ public class unoframe extends JFrame {
 	public JLabel nowcard;				// 当前的牌
 	public JButton newcard;				// 摸牌按钮
 	public JLabel nowwho;				// 指示当前玩家
+	public JLabel[] turn;
 	
 	
 	// 绘图常用数据
@@ -102,7 +103,10 @@ public class unoframe extends JFrame {
 	
 	// othnum 位置
 	private static final int numw = 30;
-	private static final int numh = 30;
+	private static final int numh = 15;
+	
+	private static int turnw = 65;
+	private static int turnh = 18;
 	
 	private static final ImageIcon back = new ImageIcon("unoimg\\back.png");
 	
@@ -139,9 +143,10 @@ public class unoframe extends JFrame {
 	}
 	
 	// 编号转方位箭头
-	public String posarrow(int pl)
+	public String posarrow(int direc)
 	{
-		switch((pl + 4 - mypl) % 4)
+		//switch((pl + 4 - mypl) % 4)
+		switch(direc)
 		{
 		case 0:
 			return "↓";
@@ -256,7 +261,7 @@ public class unoframe extends JFrame {
 	}
 	
 	// 接收当前玩家、牌、颜色信息
-	public void rcvnow(int pl, int nam, int cl)
+	public void rcvnow(int pl, int nam, int cl, int direc)
 	{
 		// 设置当前的牌
 		nowcard.setIcon(new ImageIcon("unoimg\\"+unocard.filename(nam)+".png"));
@@ -264,7 +269,10 @@ public class unoframe extends JFrame {
 			nowcard.setVisible(true);
 		
 		// 指示当前玩家
-		nowwho.setText(posarrow(pl));
+		for (int i = 0; i < 4; i++) turn[i].setVisible(false);
+		turn[(pl + 4 - mypl) % 4].setVisible(true);
+		
+		nowwho.setText(posarrow(direc));
 		if (cl % 2 == 0)
 			nowwho.setForeground(Color.WHITE);
 		else
@@ -614,9 +622,40 @@ public class unoframe extends JFrame {
 		nowwho = new JLabel("", JLabel.CENTER);
 		nowwho.setFont(new Font("黑体", Font.PLAIN, 20));
 		nowwho.setOpaque(true);
-		nowwho.setBounds((windoww - numw)/2, (windowh - cardh - bod)/2 - numh, numw, numh);
+		nowwho.setBounds((windoww - numw)/2, cardy + cardh + (bod/2 - numh)/2, numw, numh);
 		contentPane.add(nowwho);
 		nowwho.setVisible(false);
+		
+		turnw = 75; turnh = 18;
+		turn = new JLabel[4];
+		turn[0] = new JLabel("My Turn!");
+		turn[0].setBounds( (windoww - turnw)/2, cardy - (bod+turnh)/2, turnw, turnh);
+		turn[0].setFont(new Font("黑体", Font.BOLD, 15));
+		turn[0].setForeground(Color.RED);
+		turn[0].setVisible(false);
+		contentPane.add(turn[0]);
+		
+		turn[2] = new JLabel("My Turn!");
+		turn[2].setBounds( (windoww - turnw)/2, bod + cardh + (bod -turnh)/2, turnw, turnh);
+		turn[2].setFont(new Font("黑体", Font.BOLD, 15));
+		turn[2].setForeground(Color.RED);
+		turn[2].setVisible(false);
+		contentPane.add(turn[2]);
+		
+		turnw = 10; turnh = 150;
+		turn[1] = new JLabel("<html>M<br>y<br> <br>T<br>u<br>r<br>n<br>!<br></html>");
+		turn[1].setBounds( bod + cardw + (bod-turnw) / 2, (windowh-turnh)/2, turnw, turnh);
+		turn[1].setFont(new Font("黑体", Font.BOLD, 15));
+		turn[1].setForeground(Color.RED);
+		turn[1].setVisible(false);
+		contentPane.add(turn[1]);
+		
+		turn[3] = new JLabel("<html>M<br>y<br> <br>T<br>u<br>r<br>n<br>!<br></html>");
+		turn[3].setBounds( windoww - bod - cardw - (bod+turnw)/2, (windowh-turnh)/2, turnw, turnh);
+		turn[3].setFont(new Font("黑体", Font.BOLD, 15));
+		turn[3].setForeground(Color.RED);
+		turn[3].setVisible(false);
+		contentPane.add(turn[3]);
 		
 		mycard = new JButton[tot];
 		for (int i = 0; i < tot; i++)
