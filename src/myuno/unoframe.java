@@ -81,6 +81,7 @@ public class unoframe extends JFrame {
 	public JLabel nowcard;				// 当前的牌
 	public JButton newcard;				// 摸牌按钮
 	public JLabel nowwho;				// 指示当前玩家
+	public JLabel[] turn;
 	
 	
 	// 绘图常用数据
@@ -102,9 +103,13 @@ public class unoframe extends JFrame {
 	
 	// othnum 位置
 	private static final int numw = 30;
-	private static final int numh = 30;
+	private static final int numh = 15;
+	
+	private static int turnw = 50;
+	private static int turnh = 50;
 	
 	private static final ImageIcon back = new ImageIcon("unoimg\\back.png");
+	private static final ImageIcon timer = new ImageIcon("unoimg\\timer.jpg");
 	
 	// 其它变量
 	static final int tot = 108;			// 牌总数
@@ -137,11 +142,13 @@ public class unoframe extends JFrame {
 			return "右";
 		}
 	}
-	
+
+//------------------------------------------------------------------------------------------ changed
 	// 编号转方位箭头
-	public String posarrow(int pl)
+	public String posarrow(int direc)
 	{
-		switch((pl + 4 - mypl) % 4)
+		//switch((pl + 4 - mypl) % 4)
+		switch(direc)
 		{
 		case 0:
 			return "↓";
@@ -153,6 +160,7 @@ public class unoframe extends JFrame {
 			return "→";
 		}
 	}
+//------------------------------------------------------------------------------------------
 	
 	// 颜色编号转颜色
 	public Color colorname(int cl)
@@ -256,15 +264,20 @@ public class unoframe extends JFrame {
 	}
 	
 	// 接收当前玩家、牌、颜色信息
-	public void rcvnow(int pl, int nam, int cl)
+	public void rcvnow(int pl, int nam, int cl, int direc)
 	{
 		// 设置当前的牌
 		nowcard.setIcon(new ImageIcon("unoimg\\"+unocard.filename(nam)+".png"));
 		if (!nowcard.isVisible())
 			nowcard.setVisible(true);
-		
+
+//------------------------------------------------------------------------------------------ changed
 		// 指示当前玩家
-		nowwho.setText(posarrow(pl));
+		for (int i = 0; i < 4; i++) turn[i].setVisible(false);
+		turn[(pl + 4 - mypl) % 4].setVisible(true);
+		
+		nowwho.setText(posarrow(direc));
+//------------------------------------------------------------------------------------------
 		if (cl % 2 == 0)
 			nowwho.setForeground(Color.WHITE);
 		else
@@ -614,9 +627,37 @@ public class unoframe extends JFrame {
 		nowwho = new JLabel("", JLabel.CENTER);
 		nowwho.setFont(new Font("黑体", Font.PLAIN, 20));
 		nowwho.setOpaque(true);
-		nowwho.setBounds((windoww - numw)/2, (windowh - cardh - bod)/2 - numh, numw, numh);
+		nowwho.setBounds((windoww - numw)/2, cardy + cardh + (bod/2 - numh)/2, numw, numh); // changed
 		contentPane.add(nowwho);
 		nowwho.setVisible(false);
+		
+//------------------------------------------------------------------------------------------ changed
+		turn = new JLabel[4];
+		
+		turn[0] = new JLabel("");
+		turn[0].setBounds( (windoww - turnw)/2, cardy - (bod+turnh)/2, turnw, turnh);
+		turn[0].setIcon(timer);
+		turn[0].setVisible(false);
+		contentPane.add(turn[0]);
+		
+		turn[2] = new JLabel("");
+		turn[2].setBounds( (windoww - turnw)/2, bod + cardh + (bod -turnh)/2, turnw, turnh);
+		turn[2].setIcon(timer);
+		turn[2].setVisible(false);
+		contentPane.add(turn[2]);
+		
+		turn[1] = new JLabel("");
+		turn[1].setBounds( bod + cardw + (bod-turnw) / 2, (windowh-turnh)/2, turnw, turnh);
+		turn[1].setIcon(timer);
+		turn[1].setVisible(false);
+		contentPane.add(turn[1]);
+		
+		turn[3] = new JLabel("");
+		turn[3].setBounds( windoww - bod - cardw - (bod+turnw)/2, (windowh-turnh)/2, turnw, turnh);
+		turn[3].setIcon(timer);
+		turn[3].setVisible(false);
+		contentPane.add(turn[3]);
+//------------------------------------------------------------------------------------------
 		
 		mycard = new JButton[tot];
 		for (int i = 0; i < tot; i++)
