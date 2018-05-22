@@ -6,4 +6,4 @@
   3. 更改了各个文件中的 sendnow 和 rcvnow 函数，多传递了一个 direc 方向信息
 
 注：
-  其他文件只改动了sendnow 和 rcvnow 函数，unoframe中的改动用 "//----------------" 注释标出
+  其他文件只改动了sendnow 和 rcvnow 函数，unoframe中的改动用 "//---------------- changed" 注释标出
