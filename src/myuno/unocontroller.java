@@ -220,7 +220,7 @@ public class unocontroller {
 		// 需要检查玩家是否在线
 		for (int i = 0; i < 4; i++)
 			if (valid[i])
-				if (!tel.sendnow(i, nowwho, precard, nowcolor))
+				if (!tel.sendnow(i, nowwho, precard, nowcolor, direc))
 					turnresult = dealwithexit(i);
 		// 如果掉线人数过多或当前玩家掉线，直接返回
 		if (turnresult > 0 || !valid[nowwho])

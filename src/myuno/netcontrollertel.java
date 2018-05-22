@@ -43,9 +43,9 @@ public class netcontrollertel extends controllertel {
 	}
 	
 	// 发送当前玩家、牌、颜色信息
-	public boolean sendnow(int towho, int pl, int num, int cl)
+	public boolean sendnow(int towho, int pl, int num, int cl, int direc)
 	{
-		return cts[towho].sender("n " + pl + " " + num + " " + cl);
+		return cts[towho].sender("n " + pl + " " + num + " " + cl + " " + direc);
 	}
 	
 	// 发送出牌信息（给谁，谁，出了第几张牌）
