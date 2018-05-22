@@ -141,7 +141,8 @@ public class unoframe extends JFrame {
 			return "右";
 		}
 	}
-	
+
+//------------------------------------------------------------------------------------------ changed
 	// 编号转方位箭头
 	public String posarrow(int direc)
 	{
@@ -158,6 +159,7 @@ public class unoframe extends JFrame {
 			return "→";
 		}
 	}
+//------------------------------------------------------------------------------------------
 	
 	// 颜色编号转颜色
 	public Color colorname(int cl)
@@ -267,12 +269,14 @@ public class unoframe extends JFrame {
 		nowcard.setIcon(new ImageIcon("unoimg\\"+unocard.filename(nam)+".png"));
 		if (!nowcard.isVisible())
 			nowcard.setVisible(true);
-		
+
+//------------------------------------------------------------------------------------------ changed
 		// 指示当前玩家
 		for (int i = 0; i < 4; i++) turn[i].setVisible(false);
 		turn[(pl + 4 - mypl) % 4].setVisible(true);
 		
 		nowwho.setText(posarrow(direc));
+//------------------------------------------------------------------------------------------
 		if (cl % 2 == 0)
 			nowwho.setForeground(Color.WHITE);
 		else
@@ -622,10 +626,11 @@ public class unoframe extends JFrame {
 		nowwho = new JLabel("", JLabel.CENTER);
 		nowwho.setFont(new Font("黑体", Font.PLAIN, 20));
 		nowwho.setOpaque(true);
-		nowwho.setBounds((windoww - numw)/2, cardy + cardh + (bod/2 - numh)/2, numw, numh);
+		nowwho.setBounds((windoww - numw)/2, cardy + cardh + (bod/2 - numh)/2, numw, numh); // changed
 		contentPane.add(nowwho);
 		nowwho.setVisible(false);
 		
+//------------------------------------------------------------------------------------------ changed
 		turnw = 75; turnh = 18;
 		turn = new JLabel[4];
 		turn[0] = new JLabel("My Turn!");
@@ -656,6 +661,7 @@ public class unoframe extends JFrame {
 		turn[3].setForeground(Color.RED);
 		turn[3].setVisible(false);
 		contentPane.add(turn[3]);
+//------------------------------------------------------------------------------------------
 		
 		mycard = new JButton[tot];
 		for (int i = 0; i < tot; i++)
